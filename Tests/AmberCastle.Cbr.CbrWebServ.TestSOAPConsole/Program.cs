@@ -16,13 +16,30 @@ namespace AmberCastle.Cbr.CbrWebServ.TestSOAPConsole
         {
             Console.WriteLine("Hello World!");
 
-            var _apiUrl = $"http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx";
-
-            XNamespace ns = "http://schemas.xmlsoap.org/soap/envelope/";
+            //var method = "GetCursOnDate";
+            //var _params = "On_date";
             XNamespace myns = "http://web.cbr.ru/";
+            //XElement parameters = new XElement(myns + method,
+            //    //new XElement(myns + "client",
+            //    //    new XElement(myns + "Username", $"_apiUsername"),
+            //    //    new XElement(myns + "Password", $"_apiPassword")),
+
+            //    new XElement(myns + _params, DateTime.Today)
+            //);
+
+            XElement parameters = 
+                new XElement(myns + "OstatDynamic",
+                    new XElement(myns + "fromDate", DateTime.Today.AddDays(-10)),
+                    new XElement(myns + "ToDate", DateTime.Today)
+
+            );
+
+
+            var _apiUrl = $"http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx";
 
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
+            XNamespace ns = "http://www.w3.org/2003/05/soap-envelope";
 
             XDocument soapRequest = new XDocument(
                 new XDeclaration("1.0", "UTF-8", "no"),
@@ -30,15 +47,26 @@ namespace AmberCastle.Cbr.CbrWebServ.TestSOAPConsole
                     new XAttribute(XNamespace.Xmlns + "xsi", xsi),
                     new XAttribute(XNamespace.Xmlns + "xsd", xsd),
                     new XAttribute(XNamespace.Xmlns + "soap", ns),
-                    new XElement(ns + "Body",
-                        new XElement(myns + "GetCursOnDateXML",
-                            //new XElement(myns + "client",
-                            //    new XElement(myns + "Username", $"_apiUsername"),
-                            //    new XElement(myns + "Password", $"_apiPassword")),
-                            new XElement(myns + "On_date", DateTime.Today)
-                        )
-                    )
+                    new XElement(ns + "Body", parameters)
                 ));
+            //XElement body = soapRequest.Element("Body");
+            //body.Add(new XElement(myns + method,
+            //    //new XElement(myns + "client",
+            //    //    new XElement(myns + "Username", $"_apiUsername"),
+            //    //    new XElement(myns + "Password", $"_apiPassword")),
+
+            //    new XElement(myns + _params, DateTime.Today)
+            //));
+
+            //soapRequest.Element(ns + "Envelope").Element(ns + "Body").Add(new XElement(myns + method,
+            //    //new XElement(myns + "client",
+            //    //    new XElement(myns + "Username", $"_apiUsername"),
+            //    //    new XElement(myns + "Password", $"_apiPassword")),
+
+            //    new XElement(myns + _params, DateTime.Today)
+            //));
+
+            //soapRequest.Element(ns + "Envelope").Element(ns + "Body").Add(parameters);
 
             try
             {
@@ -55,7 +83,7 @@ namespace AmberCastle.Cbr.CbrWebServ.TestSOAPConsole
                     request.Headers.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
                     request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
-                    request.Headers.Add("SOAPAction", "http://web.cbr.ru/GetCursOnDateXML");
+                    //request.Headers.Add("SOAPAction", $"http://web.cbr.ru/{method}");
 
                     var test = request.ToString();
 
