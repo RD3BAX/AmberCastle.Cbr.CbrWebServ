@@ -14,7 +14,7 @@ namespace AmberCastle.Cbr.CbrWebServ
     /// <summary>
     /// Сервис для получения ежедневных данных (курсы валют, учетные цены драг. металлов и другие)
     /// </summary>
-    class DailyInfoClient
+    public class DailyInfoClient
     {
         #region Поля
 

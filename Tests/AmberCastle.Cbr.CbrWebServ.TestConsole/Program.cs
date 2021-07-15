@@ -32,17 +32,17 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
 
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
-            //services.AddHttpClient<CbrClient>(client =>
-            //{
-            //    var config = host.Configuration.GetSection("CbrWebServ");
-            //    client.BaseAddress = new Uri(
-            //        $"{config["Schema"]}://" +
-            //        $"{config["Address"]}"
-            //        );
-            //})
-            //    .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-            //    .AddPolicyHandler(GetRetryPolicy())
-            //    ;
+            services.AddHttpClient<DailyInfoClient>(client =>
+            {
+                var config = host.Configuration.GetSection("CbrWebServ");
+                client.BaseAddress = new Uri(
+                    $"{config["Schema"]}://" +
+                    $"{config["Address"]}"
+                    );
+            })
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddPolicyHandler(GetRetryPolicy())
+                ;
         }
 
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
@@ -60,7 +60,10 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             using var host = Hosting;
             await host.StartAsync();
 
-            
+            var client = Services.GetRequiredService<DailyInfoClient>();
+
+            Console.WriteLine(client.AllDataInfoXML().Result);
+
 
             Console.WriteLine("Завершено!");
             Console.ReadLine();
