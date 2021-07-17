@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -33,13 +35,67 @@ namespace AmberCastle.Cbr.CbrWebServ
             XNamespace myns = "http://web.cbr.ru/";
             XElement parameters =
                 new XElement(myns + "AllDataInfoXML");
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            return doc;
+        }
+
+        /// <summary>
+        /// Данные по размещению бюджетных средств на депозиты коммерческих банков
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<Bauction>> Bauction(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "Bauction",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
+
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("BA");
+            var result = new List<Bauction>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new Bauction
+                {
+                    Date = DateTime.Parse(xElement.Element("date").Value),
+                    TermPlacement = int.Parse(xElement.Element("Srok").Value),
+                    AverageRate = double.Parse(xElement.Element("stav_w").Value, CultureInfo.InvariantCulture),
+                    VolumeAllocated = double.Parse(xElement.Element("vol_sr").Value, CultureInfo.InvariantCulture)
+                });
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Структура бивалютной корзины
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<XDocument> BiCurBacket(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "BiCurBacket",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
 
             return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
         }
 
         #endregion // Методы
 
-        public async Task<XDocument> GetFromCbr(XElement parameters, CancellationToken Cancel = default)
+        protected async Task<XDocument> GetFromCbr(XElement parameters, CancellationToken Cancel = default)
         {
             //var _apiUrl = $"/DailyInfoWebServ/DailyInfo.asmx";
 

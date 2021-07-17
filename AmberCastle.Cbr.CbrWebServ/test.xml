@@ -1,0 +1,59 @@
+﻿<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <BiCurBacketResponse xmlns="http://web.cbr.ru/">
+      <BiCurBacketResult>
+        <xs:schema id="BiCurBacket" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+          <xs:element name="BiCurBacket" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+            <xs:complexType>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="BC">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="D0" msdata:Caption="Дата начала действия" type="xs:dateTime" minOccurs="0" />
+                      <xs:element name="USD" msdata:Caption="Число единиц иностранной валюты в составе корзины / Доллар США" type="xs:decimal" minOccurs="0" />
+                      <xs:element name="EUR" msdata:Caption="Число единиц иностранной валюты в составе корзины / Евро" type="xs:decimal" minOccurs="0" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:complexType>
+          </xs:element>
+        </xs:schema>
+        <diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+          <BiCurBacket xmlns="">
+            <BC diffgr:id="BC1" msdata:rowOrder="0">
+              <D0>2007-02-08T00:00:00+03:00</D0>
+              <USD>0.55</USD>
+              <EUR>0.45</EUR>
+            </BC>
+            <BC diffgr:id="BC2" msdata:rowOrder="1">
+              <D0>2005-12-01T00:00:00+03:00</D0>
+              <USD>0.60</USD>
+              <EUR>0.40</EUR>
+            </BC>
+            <BC diffgr:id="BC3" msdata:rowOrder="2">
+              <D0>2005-08-01T00:00:00+04:00</D0>
+              <USD>0.65</USD>
+              <EUR>0.35</EUR>
+            </BC>
+            <BC diffgr:id="BC4" msdata:rowOrder="3">
+              <D0>2005-05-16T00:00:00+04:00</D0>
+              <USD>0.70</USD>
+              <EUR>0.30</EUR>
+            </BC>
+            <BC diffgr:id="BC5" msdata:rowOrder="4">
+              <D0>2005-03-15T00:00:00+03:00</D0>
+              <USD>0.80</USD>
+              <EUR>0.20</EUR>
+            </BC>
+            <BC diffgr:id="BC6" msdata:rowOrder="5">
+              <D0>2005-02-01T00:00:00+03:00</D0>
+              <USD>0.90</USD>
+              <EUR>0.10</EUR>
+            </BC>
+          </BiCurBacket>
+        </diffgr:diffgram>
+      </BiCurBacketResult>
+    </BiCurBacketResponse>
+  </soap:Body>
+</soap:Envelope>
