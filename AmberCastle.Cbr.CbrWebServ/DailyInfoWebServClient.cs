@@ -47,7 +47,7 @@ namespace AmberCastle.Cbr.CbrWebServ
         /// <param name="ToDate"></param>
         /// <param name="Cancel"></param>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Bauction>> Bauction(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        public async Task<IReadOnlyList<Bauction>> GetBauction(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
             XElement parameters =
@@ -81,11 +81,37 @@ namespace AmberCastle.Cbr.CbrWebServ
         /// <param name="ToDate"></param>
         /// <param name="Cancel"></param>
         /// <returns></returns>
-        public async Task<XDocument> BiCurBacket(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        public async Task<IReadOnlyList<BiCurBacket>> GetBiCurBacket(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
             XElement parameters =
                 new XElement(myns + "BiCurBacket",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
+
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("BC");
+            var result = new List<BiCurBacket>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new BiCurBacket
+                {
+                    EffectiveDate = DateTime.Parse(xElement.Element("D0").Value),
+                    NumberOfUnitsUSD = double.Parse(xElement.Element("USD").Value, CultureInfo.InvariantCulture),
+                    NumberOfUnitsEUR = double.Parse(xElement.Element("EUR").Value, CultureInfo.InvariantCulture)
+                });
+            }
+            return result;
+        }
+
+        public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "BiCurBase",
                     new XElement(myns + "fromDate", FromDate),
                     new XElement(myns + "ToDate", ToDate)
                 );

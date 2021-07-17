@@ -69,20 +69,17 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
 
             //Console.WriteLine(client.AllDataInfoXML().Result);
 
-            Console.WriteLine(client.AllDataInfoXML().Result);
+            //var bauctions = client.GetBauction(DateTime.Today.AddYears(-15), DateTime.Today).Result;
+            //foreach (var bauction in bauctions)
+            //{
+            //    Console.WriteLine(bauction);
+            //}
 
-            var bauctions = client.Bauction(DateTime.Today.AddYears(-15), DateTime.Today).Result;
-
-            foreach (var bauction in bauctions)
-            {
-                Console.WriteLine(bauction);
-            }
-
-            Console.WriteLine(client.BiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result);
-            ////var doc = client.BiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result;
+            Console.WriteLine(client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result);
+            var BiCurBackets = client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result;
 
 
-            //var doc = client.Bauction(DateTime.Today.AddYears(-15), DateTime.Today).Result;
+            //var doc = client.GetBauction(DateTime.Today.AddYears(-15), DateTime.Today).Result;
             ////XNamespace myns = "http://web.cbr.ru/";
 
             //var field = doc.Descendants("BA");
