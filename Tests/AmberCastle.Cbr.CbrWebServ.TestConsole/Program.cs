@@ -75,51 +75,16 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //    Console.WriteLine(bauction);
             //}
 
-            Console.WriteLine(client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result);
-            var BiCurBackets = client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result;
+            //Console.WriteLine(client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result);
+            //var BiCurBackets = client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result;
 
+            //Console.WriteLine(client.GetBiCurBase(DateTime.Today.AddYears(-1), DateTime.Today).Result);
+            var BiCurBases = client.GetBiCurBase(DateTime.Today.AddYears(-1), DateTime.Today).Result;
+            foreach (var biCurBase in BiCurBases)
+            {
+                Console.WriteLine(biCurBase);
+            }
 
-            //var doc = client.GetBauction(DateTime.Today.AddYears(-15), DateTime.Today).Result;
-            ////XNamespace myns = "http://web.cbr.ru/";
-
-            //var field = doc.Descendants("BA");
-
-            ////var TheElements1 =
-            ////    from
-            ////        AnyElement
-            ////        in
-            ////        doc.Descendants("BC")
-            ////    select
-            ////        AnyElement;
-            //foreach (var xElement in field)
-            //{
-            //    Console.WriteLine(DateTime.Parse(xElement.Element("date").Value));
-            //    Console.WriteLine(int.Parse(xElement.Element("Srok").Value));
-            //    Console.WriteLine(double.Parse(xElement.Element("stav_w").Value, CultureInfo.InvariantCulture));
-            //    Console.WriteLine(double.Parse(xElement.Element("vol_sr").Value, CultureInfo.InvariantCulture));
-            //}
-
-
-
-            //using (var witer = new XmlTextWriter(doc))
-
-            ////проходим по каждому элементу в найшей library
-            ////(этот элемент сразу доступен через свойство doc.Root)
-            //foreach (XElement el in doc.Root.Elements("Body"))
-            //{
-            //    Console.WriteLine(el);
-
-            //    ////Выводим имя элемента и значение аттрибута id
-            //    //Console.WriteLine("{0} {1}", el.Name, el.Attribute("id").Value);
-            //    //Console.WriteLine("  Attributes:");
-            //    ////выводим в цикле все аттрибуты, заодно смотрим как они себя преобразуют в строку
-            //    //foreach (XAttribute attr in el.Attributes())
-            //    //    Console.WriteLine("    {0}", attr);
-            //    //Console.WriteLine("  Elements:");
-            //    ////выводим в цикле названия всех дочерних элементов и их значения
-            //    //foreach (XElement element in el.Elements())
-            //    //    Console.WriteLine("    {0}: {1}", element.Name, element.Value);
-            //}
 
 
             Console.WriteLine("Завершено!");
