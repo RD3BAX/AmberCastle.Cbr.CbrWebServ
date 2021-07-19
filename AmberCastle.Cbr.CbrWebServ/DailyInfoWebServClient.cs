@@ -174,10 +174,16 @@ namespace AmberCastle.Cbr.CbrWebServ
                 });
             }
             return result;
+        }
 
-           }
-
-        public async Task<XDocument> GetDV(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        /// <summary>
+        /// Требования Банка России к кредитным организациям
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<List<DV>> GetDV(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
             XElement parameters =
@@ -186,7 +192,25 @@ namespace AmberCastle.Cbr.CbrWebServ
                     new XElement(myns + "ToDate", ToDate)
                 );
 
-            return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("DV");
+            var result = new List<DV>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new DV
+                {
+                    Date = DateTime.Parse(xElement.Element("Date").Value),
+                    OvernightLoans = double.Parse(xElement.Element("VOvern").Value, CultureInfo.InvariantCulture),
+                    LombardLoans = double.Parse(xElement.Element("VLomb").Value, CultureInfo.InvariantCulture),
+                    IntradayLoans = double.Parse(xElement.Element("VIDay").Value, CultureInfo.InvariantCulture),
+                    OtherLoans = double.Parse(xElement.Element("VOther").Value, CultureInfo.InvariantCulture),
+                    BackedByGold = double.Parse(xElement.Element("Vol_Gold").Value, CultureInfo.InvariantCulture),
+                    DateForIntradayLoans = DateTime.Parse(xElement.Element("VIDate").Value)
+                });
+            }
+            return result;
         }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
