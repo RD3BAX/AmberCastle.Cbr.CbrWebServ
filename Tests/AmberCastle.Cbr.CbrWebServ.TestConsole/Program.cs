@@ -79,12 +79,14 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var BiCurBackets = client.GetBiCurBacket(DateTime.Today.AddYears(-1), DateTime.Today).Result;
 
             //Console.WriteLine(client.GetBiCurBase(DateTime.Today.AddYears(-1), DateTime.Today).Result);
-            var BiCurBases = client.GetBiCurBase(DateTime.Today.AddYears(-1), DateTime.Today).Result;
-            foreach (var biCurBase in BiCurBases)
-            {
-                Console.WriteLine(biCurBase);
-            }
+            //var BiCurBases = client.GetBiCurBase(DateTime.Today.AddYears(-1), DateTime.Today).Result;
+            //foreach (var biCurBase in BiCurBases)
+            //{
+            //    Console.WriteLine(biCurBase);
+            //}
 
+            //Console.WriteLine(client.GetCoins_base(DateTime.Today.AddYears(-3), DateTime.Today).Result);
+            var CoinsBases = client.GetCoins_base(DateTime.Today.AddYears(-3), DateTime.Today).Result;
 
 
             Console.WriteLine("Завершено!");

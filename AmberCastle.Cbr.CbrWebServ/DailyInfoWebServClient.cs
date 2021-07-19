@@ -139,6 +139,56 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
+        /// <summary>
+        /// Отпускные цены Банка России на инвестиционные монеты
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<List<CoinsBase>> GetCoins_base(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "Coins_base",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
+
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("CB");
+            var result = new List<CoinsBase>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new CoinsBase
+                {
+                    Date = DateTime.Parse(xElement.Element("date").Value),
+                    CatalogueNumber = xElement.Element("Cat_number").Value.Trim(),
+                    Name = xElement.Element("name").Value.Trim(),
+                    Denomination = double.Parse(xElement.Element("nominal").Value, CultureInfo.InvariantCulture),
+                    MetalType = int.Parse(xElement.Element("Metall").Value, CultureInfo.InvariantCulture),
+                    PureMetalContent = double.Parse(xElement.Element("Q").Value, CultureInfo.InvariantCulture),
+                    PriceBR = double.Parse(xElement.Element("PriceBR").Value, CultureInfo.InvariantCulture)
+                });
+            }
+            return result;
+
+           }
+
+        public async Task<XDocument> GetDV(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "DV",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
+
+            return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+        }
+
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
         //    XNamespace myns = "http://web.cbr.ru/";
