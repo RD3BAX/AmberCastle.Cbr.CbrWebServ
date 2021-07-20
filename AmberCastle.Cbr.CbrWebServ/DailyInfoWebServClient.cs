@@ -213,6 +213,85 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
+        /// <summary>
+        /// Динамика ставок привлечения средств по депозитным операциям
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<List<DepoDynamic>> GetDepoDynamic(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "DepoDynamic",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
+
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("Depo");
+            var result = new List<DepoDynamic>();
+
+            foreach (var xElement in field)
+            {
+                
+                //var TomNext = xElement.Element("Overnight") is { Value: var str_value } 
+                //              && double.TryParse(str_value, out var value) ? value : (double?)null;
+
+                result.Add(new DepoDynamic
+                {
+                    DateDepo = DateTime.Parse(xElement.Element("DateDepo").Value),
+                    Overnight = xElement.Element("Overnight") is not null
+                        ? double.Parse(xElement.Element("Overnight").Value, CultureInfo.InvariantCulture) : null,
+                    TomNext = xElement.Element("TomNext") is not null
+                        ? double.Parse(xElement.Element("TomNext").Value, CultureInfo.InvariantCulture) : null,
+                    P1week = xElement.Element("P1week") is not null
+                        ? double.Parse(xElement.Element("P1week").Value, CultureInfo.InvariantCulture) : null,
+                    P2weeks = xElement.Element("P2weeks") is not null
+                        ? double.Parse(xElement.Element("P2weeks").Value, CultureInfo.InvariantCulture) : null,
+                    P1month = xElement.Element("P1month") is not null
+                        ? double.Parse(xElement.Element("P1month").Value, CultureInfo.InvariantCulture) : null,
+                    P3month = xElement.Element("P3month") is not null
+                        ? double.Parse(xElement.Element("P3month").Value, CultureInfo.InvariantCulture) : null,
+                    SpotNext = xElement.Element("SpotNext") is not null
+                        ? double.Parse(xElement.Element("SpotNext").Value, CultureInfo.InvariantCulture) : null,
+                    SpotWeek = xElement.Element("SpotNext") is not null
+                        ? double.Parse(xElement.Element("SpotNext").Value, CultureInfo.InvariantCulture) : null,
+                    Spot2Weeks = xElement.Element("Spot2Weeks") is not null
+                        ? double.Parse(xElement.Element("Spot2Weeks").Value, CultureInfo.InvariantCulture) : null,
+                    CallDeposit = xElement.Element("CallDeposit") is not null
+                        ? double.Parse(xElement.Element("CallDeposit").Value, CultureInfo.InvariantCulture) : null
+                });
+            }
+            return result;
+        }
+
+        public async Task<XDocument> DepoDynamic(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "DepoDynamic",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
+                );
+
+            return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+        }
+
+        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        //{
+        //    XNamespace myns = "http://web.cbr.ru/";
+        //    XElement parameters =
+        //        new XElement(myns + "BiCurBase",
+        //            new XElement(myns + "fromDate", FromDate),
+        //            new XElement(myns + "ToDate", ToDate)
+        //        );
+
+        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+        //}
+
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
         //    XNamespace myns = "http://web.cbr.ru/";

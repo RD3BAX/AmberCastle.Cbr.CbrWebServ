@@ -88,9 +88,11 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //Console.WriteLine(client.GetCoins_base(DateTime.Today.AddYears(-3), DateTime.Today).Result);
             //var CoinsBases = client.GetCoins_base(DateTime.Today.AddYears(-3), DateTime.Today).Result;
 
-            Console.WriteLine(/*client.GetDV(DateTime.Today.AddMonths(-1), DateTime.Today).Result*/);
-            var DVs = client.GetDV(DateTime.Today.AddMonths(-1), DateTime.Today).Result;
+            //Console.WriteLine(client.GetDV(DateTime.Today.AddMonths(-1), DateTime.Today).Result);
+            //var DVs = client.GetDV(DateTime.Today.AddMonths(-1), DateTime.Today).Result;
 
+            //Console.WriteLine(client.DepoDynamic(DateTime.Today.AddYears(-5), DateTime.Today).Result);
+            var DepoDynamics = client.GetDepoDynamic(DateTime.Today.AddYears(-5), DateTime.Today).Result;
 
             Console.WriteLine("Завершено!");
             Console.ReadLine();
