@@ -236,33 +236,19 @@ namespace AmberCastle.Cbr.CbrWebServ
 
             foreach (var xElement in field)
             {
-                
-                //var TomNext = xElement.Element("Overnight") is { Value: var str_value } 
-                //              && double.TryParse(str_value, out var value) ? value : (double?)null;
-
                 result.Add(new DepoDynamic
                 {
-                    DateDepo = DateTime.Parse(xElement.Element("DateDepo").Value),
-                    Overnight = xElement.Element("Overnight") is not null
-                        ? double.Parse(xElement.Element("Overnight").Value, CultureInfo.InvariantCulture) : null,
-                    TomNext = xElement.Element("TomNext") is not null
-                        ? double.Parse(xElement.Element("TomNext").Value, CultureInfo.InvariantCulture) : null,
-                    P1week = xElement.Element("P1week") is not null
-                        ? double.Parse(xElement.Element("P1week").Value, CultureInfo.InvariantCulture) : null,
-                    P2weeks = xElement.Element("P2weeks") is not null
-                        ? double.Parse(xElement.Element("P2weeks").Value, CultureInfo.InvariantCulture) : null,
-                    P1month = xElement.Element("P1month") is not null
-                        ? double.Parse(xElement.Element("P1month").Value, CultureInfo.InvariantCulture) : null,
-                    P3month = xElement.Element("P3month") is not null
-                        ? double.Parse(xElement.Element("P3month").Value, CultureInfo.InvariantCulture) : null,
-                    SpotNext = xElement.Element("SpotNext") is not null
-                        ? double.Parse(xElement.Element("SpotNext").Value, CultureInfo.InvariantCulture) : null,
-                    SpotWeek = xElement.Element("SpotNext") is not null
-                        ? double.Parse(xElement.Element("SpotNext").Value, CultureInfo.InvariantCulture) : null,
-                    Spot2Weeks = xElement.Element("Spot2Weeks") is not null
-                        ? double.Parse(xElement.Element("Spot2Weeks").Value, CultureInfo.InvariantCulture) : null,
-                    CallDeposit = xElement.Element("CallDeposit") is not null
-                        ? double.Parse(xElement.Element("CallDeposit").Value, CultureInfo.InvariantCulture) : null
+                    DateDepo = (DateTime)xElement.Element("DateDepo"),
+                    Overnight = (double?)xElement.Element("Overnight"),
+                    TomNext = (double?)xElement.Element("TomNext"),
+                    P1week = (double?)xElement.Element("P1week"),
+                    P2weeks = (double?)xElement.Element("P2weeks"),
+                    P1month = (double?)xElement.Element("P1month"),
+                    P3month = (double?)xElement.Element("P3month"),
+                    SpotNext = (double?)xElement.Element("SpotNext"),
+                    SpotWeek = (double?)xElement.Element("SpotNext"),
+                    Spot2Weeks = (double?)xElement.Element("Spot2Weeks"),
+                    CallDeposit = (double?)xElement.Element("CallDeposit")
                 });
             }
             return result;
