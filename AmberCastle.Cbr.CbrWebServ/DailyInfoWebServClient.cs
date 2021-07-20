@@ -254,6 +254,13 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
+        /// <summary>
+        /// Динамика учетных цен драгоценных металлов
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
         public async Task<List<DragMetall>> GetDragMetDynamic(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
@@ -280,17 +287,34 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
-        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
-        //{
-        //    XNamespace myns = "http://web.cbr.ru/";
-        //    XElement parameters =
-        //        new XElement(myns + "BiCurBase",
-        //            new XElement(myns + "fromDate", FromDate),
-        //            new XElement(myns + "ToDate", ToDate)
-        //        );
+        /// <summary>
+        /// Справочник по кодам редких валют от Thomson Reuters 
+        /// </summary>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<List<EnumRValute>> GetEnumReutersValutes(CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "EnumReutersValutes");
 
-        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
-        //}
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("EnumRValutes");
+            var result = new List<EnumRValute>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new EnumRValute
+                {
+                    DigitalCodeISO = (int)xElement.Element("num_code"),
+                    CharacterCodeISO = (string)xElement.Element("char_code"),
+                    NameRU = (string)xElement.Element("Title_ru"),
+                    NameEN = (string)xElement.Element("Title_en")
+                });
+            }
+            return result;
+        }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
