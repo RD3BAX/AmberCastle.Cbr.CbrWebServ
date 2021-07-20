@@ -92,7 +92,13 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var DVs = client.GetDV(DateTime.Today.AddMonths(-1), DateTime.Today).Result;
 
             //Console.WriteLine(client.DepoDynamic(DateTime.Today.AddYears(-5), DateTime.Today).Result);
-            var DepoDynamics = client.GetDepoDynamic(DateTime.Today.AddYears(-5), DateTime.Today).Result;
+            //var DepoDynamics = client.GetDepoDynamic(DateTime.Today.AddYears(-5), DateTime.Today).Result;
+
+            //Console.WriteLine(client.DragMetDynamic(DateTime.Today.AddMonths(-1), DateTime.Today).Result);
+            var DragMetalls = client.GetDragMetDynamic(DateTime.Today.AddMonths(-1), DateTime.Today).Result;
+
+
+
 
             Console.WriteLine("Завершено!");
             Console.ReadLine();

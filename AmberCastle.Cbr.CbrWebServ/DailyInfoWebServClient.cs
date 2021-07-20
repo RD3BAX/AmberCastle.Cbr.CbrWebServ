@@ -254,16 +254,30 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
-        public async Task<XDocument> DepoDynamic(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        public async Task<List<DragMetall>> GetDragMetDynamic(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
             XElement parameters =
-                new XElement(myns + "DepoDynamic",
+                new XElement(myns + "DragMetDynamic",
                     new XElement(myns + "fromDate", FromDate),
                     new XElement(myns + "ToDate", ToDate)
                 );
 
-            return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("DrgMet");
+            var result = new List<DragMetall>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new DragMetall
+                {
+                    DateMet = (DateTime)xElement.Element("DateMet"),
+                    CodMet = (int)xElement.Element("CodMet"),
+                    Price = (double)xElement.Element("price")
+                });
+            }
+            return result;
         }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
