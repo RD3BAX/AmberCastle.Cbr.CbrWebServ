@@ -348,16 +348,37 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
-        public async Task<XDocument> EnumValutes(/*DateTime FromDate, DateTime ToDate, */CancellationToken Cancel = default)
+        /// <summary>
+        /// Фиксинги на драгоценные металлы
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<FixingBase>> GetFixingBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
             XElement parameters =
-                new XElement(myns + "EnumValutes"
-                    //new XElement(myns + "fromDate", FromDate),
-                    //new XElement(myns + "ToDate", ToDate)
+                new XElement(myns + "FixingBase",
+                    new XElement(myns + "fromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate)
                 );
 
-            return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("FB");
+            var result = new List<FixingBase>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new FixingBase
+                {
+                    Date = (DateTime)xElement.Element("date"),
+                    Gold = (double)xElement.Element("Gold"),
+                    Silver = (double)xElement.Element("Silver")
+                });
+            }
+            return result;
         }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)

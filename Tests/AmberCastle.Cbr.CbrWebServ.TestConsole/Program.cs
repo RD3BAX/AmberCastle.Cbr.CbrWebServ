@@ -101,9 +101,10 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var enumRValutes = client.GetEnumReutersValutes().Result;
 
             //Console.WriteLine(client.GetEnumValutes().Result);
-            var EnumValutes = client.GetEnumValutes().Result;
+            //var EnumValutes = client.GetEnumValutes().Result;
 
-            //Console.WriteLine(client.EnumValutes().Result);
+            //Console.WriteLine(client.GetFixingBase(DateTime.Today.AddYears(-10), DateTime.Today).Result);
+            var FixingBases = client.GetFixingBase(DateTime.Today.AddYears(-10), DateTime.Today).Result;
 
 
             Console.WriteLine("Завершено!");
