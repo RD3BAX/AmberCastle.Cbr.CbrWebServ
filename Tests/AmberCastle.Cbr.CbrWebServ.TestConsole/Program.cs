@@ -107,7 +107,10 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var FixingBases = client.GetFixingBase(DateTime.Today.AddYears(-10), DateTime.Today).Result;
 
             //Console.WriteLine(client.GetCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, "R01235").Result);
-            var ValuteCursDynamics = client.GetCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, "R01235").Result;
+            //var ValuteCursDynamics = client.GetCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, "R01235").Result;
+
+            //Console.WriteLine(client.GetCursOnDate(DateTime.Today).Result);
+            var ValuteCursOnDates = client.GetCursOnDate(DateTime.Today).Result;
 
 
 

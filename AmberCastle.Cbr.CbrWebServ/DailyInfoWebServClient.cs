@@ -418,6 +418,39 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
+        /// <summary>
+        /// Получение ежедневных курсов валют
+        /// </summary>
+        /// <param name="OnDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<ValuteCursOnDate>> GetCursOnDate(DateTime OnDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "GetCursOnDate",
+                    new XElement(myns + "On_date", OnDate)
+                );
+
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("ValuteCursOnDate");
+            var result = new List<ValuteCursOnDate>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new ValuteCursOnDate
+                {
+                    Vname = ((string)xElement.Element("Vname")).Trim(),
+                    Vnom = (double)xElement.Element("Vnom"),
+                    Vcurs = (double)xElement.Element("Vcurs"),
+                    Vcode = (int)xElement.Element("Vcode"),
+                    VchCode = ((string)xElement.Element("VchCode"))
+                });
+            }
+            return result;
+        }
+
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
         //    XNamespace myns = "http://web.cbr.ru/";
@@ -429,7 +462,31 @@ namespace AmberCastle.Cbr.CbrWebServ
 
         //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
         //}
+        
+        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        //{
+        //    XNamespace myns = "http://web.cbr.ru/";
+        //    XElement parameters =
+        //        new XElement(myns + "BiCurBase",
+        //            new XElement(myns + "fromDate", FromDate),
+        //            new XElement(myns + "ToDate", ToDate)
+        //        );
 
+        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+        //}
+        
+        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
+        //{
+        //    XNamespace myns = "http://web.cbr.ru/";
+        //    XElement parameters =
+        //        new XElement(myns + "BiCurBase",
+        //            new XElement(myns + "fromDate", FromDate),
+        //            new XElement(myns + "ToDate", ToDate)
+        //        );
+
+        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+        //}
+        
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
         //    XNamespace myns = "http://web.cbr.ru/";
