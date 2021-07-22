@@ -381,17 +381,42 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
-        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
-        //{
-        //    XNamespace myns = "http://web.cbr.ru/";
-        //    XElement parameters =
-        //        new XElement(myns + "BiCurBase",
-        //            new XElement(myns + "fromDate", FromDate),
-        //            new XElement(myns + "ToDate", ToDate)
-        //        );
+        /// <summary>
+        /// Получение динамики ежедневных курсов валюты
+        /// Для получения кода волюты использовать GetEnumValutes
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <param name="ValutaCode">Код в классификаторе ЦБРФ</param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<ValuteCursDynamic>> GetCursDynamic(DateTime FromDate, DateTime ToDate, string ValutaCode, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "GetCursDynamic",
+                    new XElement(myns + "FromDate", FromDate),
+                    new XElement(myns + "ToDate", ToDate),
+                    new XElement(myns + "ValutaCode", ValutaCode)
+                );
 
-        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
-        //}
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("ValuteCursDynamic");
+            var result = new List<ValuteCursDynamic>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new ValuteCursDynamic
+                {
+                    CursDate = (DateTime) xElement.Element("CursDate"),
+                    Vcode = (string) xElement.Element("Vcode"),
+                    Vnom = (double) xElement.Element("Vnom"),
+                    Vcurs = (double) xElement.Element("Vcurs")
+                });
+            }
+            return result;
+        }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
