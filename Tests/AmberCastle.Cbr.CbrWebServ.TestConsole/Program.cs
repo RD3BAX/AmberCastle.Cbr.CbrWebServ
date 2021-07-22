@@ -98,7 +98,12 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var DragMetalls = client.GetDragMetDynamic(DateTime.Today.AddMonths(-1), DateTime.Today).Result;
 
             //Console.WriteLine(client.GetEnumReutersValutes().Result);
-            var enumRValutes = client.GetEnumReutersValutes().Result;
+            //var enumRValutes = client.GetEnumReutersValutes().Result;
+
+            //Console.WriteLine(client.GetEnumValutes().Result);
+            var EnumValutes = client.GetEnumValutes().Result;
+
+            //Console.WriteLine(client.EnumValutes().Result);
 
 
             Console.WriteLine("Завершено!");
