@@ -113,7 +113,10 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var ValuteCursOnDates = client.GetCursOnDate(DateTime.Today).Result;
 
             //Console.WriteLine(client.GetLatestDate().Result);
-            var LatestDate = client.GetLatestDate().Result;
+            //var LatestDate = client.GetLatestDate().Result;
+
+            //Console.WriteLine(client.GetLatestDateTimeSeld().Result);
+            var LatestDate = client.GetLatestDateTimeSeld().Result;
 
 
 

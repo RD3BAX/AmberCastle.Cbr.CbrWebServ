@@ -475,17 +475,25 @@ namespace AmberCastle.Cbr.CbrWebServ
             return DateTime.ParseExact(result, "yyyyMMdd", CultureInfo.InvariantCulture);
         }
 
-        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
-        //{
-        //    XNamespace myns = "http://web.cbr.ru/";
-        //    XElement parameters =
-        //        new XElement(myns + "BiCurBase",
-        //            new XElement(myns + "fromDate", FromDate),
-        //            new XElement(myns + "ToDate", ToDate)
-        //        );
+        /// <summary>
+        /// Последняя дата публикации курсов валют (ежемесячные валюты)
+        /// </summary>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<DateTime> GetLatestDateTimeSeld(CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "GetLatestDateTimeSeld");
 
-        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
-        //}
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            return (DateTime)doc
+                .Element(XName.Get("Envelope", "http://www.w3.org/2003/05/soap-envelope"))
+                .Element(XName.Get("Body", "http://www.w3.org/2003/05/soap-envelope"))
+                .Element(myns + "GetLatestDateTimeSeldResponse")
+                .Element(myns + "GetLatestDateTimeSeldResult");
+        }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
