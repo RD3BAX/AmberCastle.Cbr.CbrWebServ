@@ -495,17 +495,25 @@ namespace AmberCastle.Cbr.CbrWebServ
                 .Element(myns + "GetLatestDateTimeSeldResult");
         }
 
-        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
-        //{
-        //    XNamespace myns = "http://web.cbr.ru/";
-        //    XElement parameters =
-        //        new XElement(myns + "BiCurBase",
-        //            new XElement(myns + "fromDate", FromDate),
-        //            new XElement(myns + "ToDate", ToDate)
-        //        );
+        /// <summary>
+        /// Последняя дата публикации редких валют от Thomson Reuters
+        /// </summary>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<DateTime> GetLatestReutersDateTime(CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "GetLatestReutersDateTime");
 
-        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
-        //}
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            return (DateTime)doc
+                .Element(XName.Get("Envelope", "http://www.w3.org/2003/05/soap-envelope"))
+                .Element(XName.Get("Body", "http://www.w3.org/2003/05/soap-envelope"))
+                .Element(myns + "GetLatestReutersDateTimeResponse")
+                .Element(myns + "GetLatestReutersDateTimeResult");
+        }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{

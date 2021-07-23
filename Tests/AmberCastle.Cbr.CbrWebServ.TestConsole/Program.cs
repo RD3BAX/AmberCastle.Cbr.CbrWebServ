@@ -116,7 +116,11 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var LatestDate = client.GetLatestDate().Result;
 
             //Console.WriteLine(client.GetLatestDateTimeSeld().Result);
-            var LatestDate = client.GetLatestDateTimeSeld().Result;
+            //var LatestDate = client.GetLatestDateTimeSeld().Result;
+
+            //Console.WriteLine(client.GetLatestReutersDateTime().Result);
+            var LatestDate = client.GetLatestReutersDateTime().Result;
+
 
 
 
