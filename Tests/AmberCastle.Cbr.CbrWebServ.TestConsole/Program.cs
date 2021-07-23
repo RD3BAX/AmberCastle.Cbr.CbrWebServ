@@ -110,8 +110,10 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var ValuteCursDynamics = client.GetCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, "R01235").Result;
 
             //Console.WriteLine(client.GetCursOnDate(DateTime.Today).Result);
-            var ValuteCursOnDates = client.GetCursOnDate(DateTime.Today).Result;
+            //var ValuteCursOnDates = client.GetCursOnDate(DateTime.Today).Result;
 
+            //Console.WriteLine(client.GetLatestDate().Result);
+            var LatestDate = client.GetLatestDate().Result;
 
 
 
