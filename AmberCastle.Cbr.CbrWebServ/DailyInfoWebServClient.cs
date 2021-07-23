@@ -451,6 +451,7 @@ namespace AmberCastle.Cbr.CbrWebServ
             }
             return result;
         }
+
         /// <summary>
         /// Последняя дата публикации курсов валют(ежемесячные валюты)
         /// </summary>
@@ -459,14 +460,14 @@ namespace AmberCastle.Cbr.CbrWebServ
         public async Task<DateTime> GetLatestDate(CancellationToken Cancel = default)
         {
             XNamespace myns = "http://web.cbr.ru/";
-            XNamespace ns = "http://www.w3.org/2003/05/soap-envelope";
             XElement parameters =
                 new XElement(myns + "GetLatestDate");
 
             var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
 
-            var result = doc.Element(ns + "Envelope")
-                .Element(ns + "Body")
+            var result = doc
+                .Element(XName.Get("Envelope", "http://www.w3.org/2003/05/soap-envelope"))
+                .Element(XName.Get("Body", "http://www.w3.org/2003/05/soap-envelope"))
                 .Element(myns + "GetLatestDateResponse")
                 .Element(myns  + "GetLatestDateResult")                
                 .Value;
