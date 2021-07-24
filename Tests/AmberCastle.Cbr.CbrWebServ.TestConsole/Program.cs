@@ -122,8 +122,11 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var LatestDate = client.GetLatestReutersDateTime().Result;
 
             //Console.WriteLine(client.GetReutersCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, 008).Result);
-            var ReutersValuteDatas =
-                client.GetReutersCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, 008).Result;
+            //var ReutersValuteDatas =
+            //    client.GetReutersCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, 008).Result;
+
+            //Console.WriteLine(client.GetReutersCursOnDate(DateTime.Today.AddDays(-1)).Result);
+            var _reutersCurs = client.GetReutersCursOnDate(DateTime.Today.AddDays(-1)).Result;
 
 
 

@@ -550,17 +550,36 @@ namespace AmberCastle.Cbr.CbrWebServ
             return result;
         }
 
-        //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
-        //{
-        //    XNamespace myns = "http://web.cbr.ru/";
-        //    XElement parameters =
-        //        new XElement(myns + "BiCurBase",
-        //            new XElement(myns + "fromDate", FromDate),
-        //            new XElement(myns + "ToDate", ToDate)
-        //        );
+        /// <summary>
+        /// Получение ежедневных курсов редких валют от Thomson Reuters
+        /// </summary>
+        /// <param name="OnDate"></param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<ReutersCurs>> GetReutersCursOnDate(DateTime OnDate, CancellationToken Cancel = default)
+        {
+            XNamespace myns = "http://web.cbr.ru/";
+            XElement parameters =
+                new XElement(myns + "GetReutersCursOnDate",
+                    new XElement(myns + "On_date", OnDate)
+                );
 
-        //    return await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
-        //}
+            var doc = await GetFromCbr(parameters, Cancel).ConfigureAwait(false);
+
+            var field = doc.Descendants("Currency");
+            var result = new List<ReutersCurs>();
+
+            foreach (var xElement in field)
+            {
+                result.Add(new ReutersCurs
+                {
+                    NumCode = (int)xElement.Element("num_code"),
+                    Quotation = (double)xElement.Element("val"),
+                    ReverseQuotation = (bool)xElement.Element("dir")
+                });
+            }
+            return result;
+        }
 
         //public async Task<XDocument> BiCurBase(DateTime FromDate, DateTime ToDate, CancellationToken Cancel = default)
         //{
