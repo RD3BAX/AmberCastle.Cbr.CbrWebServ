@@ -119,7 +119,11 @@ namespace AmberCastle.Cbr.CbrWebServ.TestConsole
             //var LatestDate = client.GetLatestDateTimeSeld().Result;
 
             //Console.WriteLine(client.GetLatestReutersDateTime().Result);
-            var LatestDate = client.GetLatestReutersDateTime().Result;
+            //var LatestDate = client.GetLatestReutersDateTime().Result;
+
+            //Console.WriteLine(client.GetReutersCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, 008).Result);
+            var ReutersValuteDatas =
+                client.GetReutersCursDynamic(DateTime.Today.AddYears(-1), DateTime.Today, 008).Result;
 
 
 
