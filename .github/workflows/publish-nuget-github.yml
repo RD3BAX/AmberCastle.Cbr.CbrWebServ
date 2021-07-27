@@ -26,10 +26,10 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
       
     - name: Pask
-      run: dotnet pack AmberCastle.Cbr.CbrWebServ\AmberCastle.Cbr.CbrWebServ.csproj -c Release -v m --no-restore
+      run: dotnet pack AmberCastle.Cbr.CbrWebServ/AmberCastle.Cbr.CbrWebServ.csproj -c Release -v m --no-restore
       
     - name: Add Source
       run: dotnet nuget add source https://nuget.pkg.github.com/RD3BAX/index.json -n github -u RD3BAX -p ${{ secrets.GITHUB_TOKEN }}
       
     - name: Publishing
-      run: dotnet nuget push AmberCastle.Cbr.CbrWebServ\bin\Release\*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/RD3BAX/index.json -k ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push AmberCastle.Cbr.CbrWebServ/bin/Release/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/RD3BAX/index.json -k ${{ secrets.GITHUB_TOKEN }}
