@@ -1,0 +1,35 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+ 
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build -c Release --no-restore
+      
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+      
+    - name: Pask
+      run: dotnet pack AmberCastle.Cbr.CbrWebServ/AmberCastle.Cbr.CbrWebServ.csproj -c Release -v m --no-restore
+      
+    - name: Add Source
+      run: dotnet nuget add source https://nuget.pkg.github.com/RD3BAX/index.json -n github -u RD3BAX -p ${{ secrets.GITHUB_TOKEN }}
+      
+    - name: Publishing
+      run: dotnet nuget push AmberCastle.Cbr.CbrWebServ/bin/Release/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/RD3BAX/index.json -k ${{ secrets.GITHUB_TOKEN }}

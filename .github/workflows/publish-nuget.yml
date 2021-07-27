@@ -1,0 +1,34 @@
+name: Publish NuGet.org
+
+on:
+  push:
+    branches: 
+      - master
+      
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Update package
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@master
+    
+    - name: Use .NET 5.0.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Building
+      run: |
+        dotnet build AmberCastle.Cbr.CbrWebServ/AmberCastle.Cbr.CbrWebServ.csproj -c Release
+        dotnet build Tests/AmberCastle.Cbr.CbrWebServ.Tests/AmberCastle.Cbr.CbrWebServ.Tests.csproj -c Release
+      
+    - name: Testing
+      run: dotnet test Tests/AmberCastle.Cbr.CbrWebServ.Tests/AmberCastle.Cbr.CbrWebServ.Tests.csproj
+
+    - name: Packing
+      run: dotnet pack AmberCastle.Cbr.CbrWebServ/AmberCastle.Cbr.CbrWebServ.csproj --no-build -c Release  -v q
+      
+    - name: Publishing
+      run: dotnet nuget push AmberCastle.Cbr.CbrWebServ\bin\Release\*.nupkg -k ${{ secrets.NuGetApiKey }} -n --skip-duplicate -s https://api.nuget.org/v3/index.json

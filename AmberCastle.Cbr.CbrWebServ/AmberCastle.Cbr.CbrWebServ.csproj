@@ -2,6 +2,38 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageBuild>false</GeneratePackageBuild>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>AmberCastle.Cbr.CbrWebServ.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Version>0.0.1</Version>
+    <PackageReleaseNotes>Старт проекта. Реализовано часть методов связанных с получением курсов валют</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Company>Amber-Castle</Company>
+    <Product>CbrWebServ</Product>
+    <Authors>Novikov D.S.</Authors>
+    <Description>Пакет содержит методы получения данных с сайта Банка России. www.cbr.ru/development/</Description>
+    <Copyright>RD3BAX@gmail.com</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/RD3BAX/AmberCastle.Cbr.CbrWebServ</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/RD3BAX/AmberCastle.Cbr.CbrWebServ.git</RepositoryUrl>
+    <PackageTags>.NET, net5.0, cbr.ru, WEB IP, DailyInfoWebServ</PackageTags>
+    <SumbolPackageFormat>snupkg</SumbolPackageFormat>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>AmberCastle.Cbr.CbrWebServ.xml</DocumentationFile>
+  </PropertyGroup>
+
+
+
+  
+    
 </Project>

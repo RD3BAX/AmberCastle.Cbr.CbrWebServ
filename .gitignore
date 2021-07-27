@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/AmberCastle.Cbr.CbrWebServ/AmberCastle.Cbr.CbrWebServ.xml
