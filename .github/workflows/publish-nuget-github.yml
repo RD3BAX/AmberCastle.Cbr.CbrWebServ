@@ -33,4 +33,4 @@ jobs:
       run: dotnet nuget add source https://nuget.pkg.github.com/RD3BAX/index.json -n github -u RD3BAX -p ${{ secrets.GITHUB_TOKEN }}
       
     - name: Publishing
-      run: dotnet nuget push AmberCastle.Cbr.CbrWebServ/bin/Release/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/RD3BAX/index.json -k ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget push AmberCastle.Cbr.CbrWebServ\bin\Release\*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/RD3BAX/index.json -k ${{ secrets.GITHUB_TOKEN }}
