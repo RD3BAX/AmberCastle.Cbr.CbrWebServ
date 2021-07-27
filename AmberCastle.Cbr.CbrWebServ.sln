@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberCastle.Cbr.CbrWebServ.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmberCastle.Cbr.CbrWebServ.TestConsole", "Tests\AmberCastle.Cbr.CbrWebServ.TestConsole\AmberCastle.Cbr.CbrWebServ.TestConsole.csproj", "{BDB1A30D-9FDF-42FB-80DB-58FC469D9D2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmberCastle.Cbr.CbrWebServ.TestSOAPConsole", "Tests\AmberCastle.Cbr.CbrWebServ.TestSOAPConsole\AmberCastle.Cbr.CbrWebServ.TestSOAPConsole.csproj", "{4370531C-5211-4C8A-8CF3-63E175B42DB0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +29,6 @@ Global
 		{BDB1A30D-9FDF-42FB-80DB-58FC469D9D2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDB1A30D-9FDF-42FB-80DB-58FC469D9D2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDB1A30D-9FDF-42FB-80DB-58FC469D9D2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4370531C-5211-4C8A-8CF3-63E175B42DB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4370531C-5211-4C8A-8CF3-63E175B42DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4370531C-5211-4C8A-8CF3-63E175B42DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4370531C-5211-4C8A-8CF3-63E175B42DB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,7 +36,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AB560347-8E24-496A-BDFB-9269D5C55099} = {5387231A-90BC-417D-8F06-64950F34948C}
 		{BDB1A30D-9FDF-42FB-80DB-58FC469D9D2B} = {5387231A-90BC-417D-8F06-64950F34948C}
-		{4370531C-5211-4C8A-8CF3-63E175B42DB0} = {5387231A-90BC-417D-8F06-64950F34948C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05E2496B-A770-48BF-B663-3D962B636575}
