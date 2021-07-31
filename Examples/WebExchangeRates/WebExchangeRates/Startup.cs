@@ -1,8 +1,13 @@
+using System;
+using System.Net.Http;
+using AmberCastle.Cbr.CbrWebServ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Polly;
+using Polly.Extensions.Http;
 using WebExchangeRates.Services;
 
 namespace WebExchangeRates
@@ -21,6 +26,27 @@ namespace WebExchangeRates
         {
             services.AddControllersWithViews();
             services.AddServices();
+            services.AddHttpClient<DailyInfoClient>(client =>
+                {
+                    var config = Configuration.GetSection("CbrWebServ");
+                    client.BaseAddress = new Uri(
+                        $"{config["Schema"]}://" +
+                        $"{config["Address"]}"
+                    );
+                })
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddPolicyHandler(GetRetryPolicy())
+                ;
+        }
+
+        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+        {
+            var jitter = new Random();
+            return HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .WaitAndRetryAsync(6, retry_attempt =>
+                    TimeSpan.FromSeconds(Math.Pow(2, retry_attempt)) +
+                    TimeSpan.FromMilliseconds(jitter.Next(0, 1000)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
