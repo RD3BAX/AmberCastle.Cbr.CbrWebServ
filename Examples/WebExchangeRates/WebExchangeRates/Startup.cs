@@ -24,7 +24,7 @@ namespace WebExchangeRates
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddMemoryCache();
             services.AddServices();
             services.AddHttpClient<DailyInfoClient>(client =>
                 {
@@ -37,6 +37,8 @@ namespace WebExchangeRates
                 .SetHandlerLifetime(TimeSpan.FromMinutes(5))
                 .AddPolicyHandler(GetRetryPolicy())
                 ;
+            
+            services.AddControllersWithViews();
         }
 
         private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
